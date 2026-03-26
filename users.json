@@ -2,7 +2,17 @@
     "users": [
         {
             "username": "sagnik",
-            "tasks": []
+            "tasks": [
+                {
+                    "task_name": "to do list coding",
+                    "task_category": "Tecj",
+                    "task_description": "Code for 3 hours",
+                    "task_status": "Pending",
+                    "task_due_date": null,
+                    "task_creation_date": null,
+                    "task_completion_date": null
+                }
+            ]
         },
         {
             "username": "gopal",
