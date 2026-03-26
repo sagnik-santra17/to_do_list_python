@@ -2,12 +2,13 @@
     "users": [
         {
             "username": "sagnik",
+            "password": "1234",
             "tasks": [
                 {
-                    "task_name": "to do list coding",
-                    "task_category": "Tecj",
-                    "task_description": "Code for 3 hours",
-                    "task_status": "Pending",
+                    "task_name": "Coding",
+                    "task_category": "Python",
+                    "task_description": "Code for 2 hours",
+                    "task_status": "Completed",
                     "task_due_date": null,
                     "task_creation_date": null,
                     "task_completion_date": null
@@ -16,10 +17,17 @@
         },
         {
             "username": "gopal",
+            "password": "1234",
             "tasks": []
         },
         {
             "username": "gita",
+            "password": "1234",
+            "tasks": []
+        },
+        {
+            "username": "tubu",
+            "password": "1234",
             "tasks": []
         }
     ]
