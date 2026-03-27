@@ -13,6 +13,29 @@ def main_task_func(task_item): #Prints the task details
     return task_obj
 
 
+def display_tasks(task_list): #Display task list inside the main script
+    for task_number, task_item in enumerate(task_list, start=1):
+        print(f"Task Id: {task_number}")  
+        print(main_task_func(task_item))
+        print()
+
+
+def valid_input_check(prompt, min, max): #Input validation check
+    while True:
+        try:
+            num = int(input(prompt))
+
+            if min <= num <= max:
+                return num
+            else:
+                print("Please enter a number bewtween 1 and 6")
+        
+        except ValueError:
+            print("Invalid input! Enter a valid input.")
+
+
+
+
 
 
 
