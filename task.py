@@ -3,7 +3,7 @@ class Task:
         self.task_name = task_name
         self.task_category = task_category
         self.task_description = task_description
-        self.task_status = "Pending"
+        self.task_status = "Pending [ ]"
         self.task_creation_date = None
         self.task_due_date = None
         self.task_completion_date = None

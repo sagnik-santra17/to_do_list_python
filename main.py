@@ -19,7 +19,9 @@ def login_or_signup():
     for entry in existing_users["users"]:
         if entry["username"] == enter_username:
 
-            print(f"'{enter_username}' - User exists")
+            print(f"'{enter_username}' - User exists 🚻")
+            utils.separator()
+
             user_found = True
 
             current_user = entry
@@ -43,26 +45,29 @@ def login_or_signup():
         enter_password = input("Enter your password: ")
         
         if not enter_password:
-            print("Password can't be empty!")
+            print("Password can't be empty! ❌")
 
         elif enter_password == current_user["password"]:
-            print("Login successful")
+            print("Login successful✅")
+            utils.separator()
             return current_user
         
         else:
-            print("Wrong password! Try again.")
+            print("Wrong password ❌! Try again. 👈")
 
 current_user = login_or_signup()
 
 def add_task(current_user, existing_users, data): #Adding task function
 
-    new_task_name = input("Enter task name: ")  
-    new_task_category = input("Enter task category: ")
-    new_task_description = input("Enter task description: ")
+    new_task_name = input("Enter task name: ").capitalize()  
+    new_task_category = input("Enter task category: ").capitalize()  
+    new_task_description = input("Enter task description: ").capitalize()  
 
     task = Task(new_task_name, new_task_category, new_task_description)
 
     current_user["tasks"].append(task.to_dict())
+    print("Task added successfully✅")
+    utils.separator()
     data.save_data(existing_users)
 
  
@@ -78,7 +83,8 @@ def view_tasks(current_user, existing_users, data): #Viewing tasks function
             print()
 
             current_user["tasks"][user_input -1]["task_status"] = "Completed"
-            print("Status updated")
+            print("Status updated 👍")
+            utils.separator()
             data.save_data(existing_users)
             break
 
@@ -96,18 +102,19 @@ def delete_task(current_user, existing_users, data): #Deleting tasks funciton
             print()
 
             del(current_user["tasks"][user_input -1])
-            print("Task deleted successfully!")
+            print("Task deleted successfully! 👍")
+            utils.separator()
             data.save_data(existing_users)
             break
 
-def edit_task(current_user, existing_users, data): #Editing tasks
+def edit_task(current_user, existing_users, data): #Updating tasks
     if not current_user["tasks"]:
         print("No task to edit")
         print()
 
     else:
         print("Which task do you want to edit?")
-        print()
+        utils.separator()
 
         utils.display_tasks(current_user["tasks"])
 
@@ -118,8 +125,8 @@ def edit_task(current_user, existing_users, data): #Editing tasks
             current_task = current_user["tasks"][task_id -1]
 
             while True:
-
-                print()
+                
+                utils.separator()
                 print("What do you want to edit?")
                 print("1. Edit task name")
                 print("2. Edit task category")
@@ -129,7 +136,7 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                 print("6. Edit task due date")
                 print("7. Edit task completion date")
                 print("8. Main menu")
-                print()
+                utils.separator()
 
                 edit_choice = utils.valid_input_check("Choose an action: ", 1, 8)
 
@@ -139,7 +146,7 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                         edited_task_name = input("Enter the modified task name: ").strip()
 
                         if not edited_task_name:
-                            print("Please enter a valid modified task name")
+                            print("Please enter a valid modified task name 👈")
                         else:
                             old_task_name = current_task["task_name"]
                             current_task["task_name"] = edited_task_name
@@ -147,7 +154,8 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                             print()
 
                             print(f'"{old_task_name}" updated to "{edited_task_name}"')
-                            print("Task name updated successfully!")
+                            print("Task name updated successfully!✅")
+                            utils.separator()
                             data.save_data(existing_users)
                             break   
                     
@@ -158,7 +166,7 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                         edited_category = input("Enter the new category: ").strip()
 
                         if not edited_category:
-                            print("Please enter a valid category!")
+                            print("Please enter a valid category! 👈")
 
                         else:
                             old_category = current_task["task_category"]
@@ -167,28 +175,34 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                             print()
                             
                             print(f'"{old_category}" updated to "{edited_category}"')
-                            print("Category updated")
+                            print("Category updated✅")
+                            utils.separator()
                             data.save_data(existing_users)
                             break
 
                 elif edit_choice == 3: #Editing task status
 
                     while True:
-                        edited_status = input("Enter the new status: ").strip()
+                        edited_status = input("Enter the new status (Pending/Completed): ").lower().strip()
 
                         if not edited_status:
-                            print("Please enter a valid status!")
+                            print("Please enter a valid status! 👈")
 
                         else:
-                            old_status = current_task["task_status"]
-                            current_task["task_status"] = edited_status
+                            if edited_status == "pending" or edited_status == "completed":
+                                old_status = current_task["task_status"]
+                                current_task["task_status"] = edited_status
 
-                            print()
+                                print()
 
-                            print(f'"{old_status}" updated to "{edited_status}"')
-                            print("Status updated")
-                            data.save_data(existing_users)
-                            break
+                                print(f'"{old_status}" updated to "{edited_status}"')
+                                print("Status updated✅")
+                                utils.separator()
+                                data.save_data(existing_users)
+                                break
+
+                            else:
+                                print("Wrong input! ❌ Choose between 'Pending' or 'Completed' 👈")
 
                 elif edit_choice == 4: #Editing description
 
@@ -196,7 +210,7 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                         edited_description = input("Enter the new description: ").strip()
 
                         if not edited_description:
-                            print("Please enter a valid description!")
+                            print("Please enter a valid description! 👈")
 
                         else:
                             old_description = current_task["task_description"]
@@ -205,7 +219,8 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                             print()
 
                             print(f'"{old_description}" updated to "{edited_description}"')
-                            print("Description updated")
+                            print("Description updated✅")
+                            utils.separator()
                             data.save_data(existing_users)
                             break
 
@@ -215,7 +230,7 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                         edited_task_creation_date = input("Enter the new task creation date: ").strip()
 
                         if not edited_task_creation_date:
-                            print("Please enter a valid task creation date!")
+                            print("Please enter a valid task creation date! 👈")
 
                         else:
                             old_task_creattion_date = current_task["task_creation_date"]
@@ -224,7 +239,8 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                             print()
 
                             print(f'"{old_task_creattion_date}" updated to "{edited_task_creation_date}"')
-                            print("Task creation date updated")
+                            print("Task creation date updated ✅")
+                            utils.separator()
                             data.save_data(existing_users)
                             break
 
@@ -233,7 +249,7 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                         edited_due_date = input("Enter the new due date: ").strip()
 
                         if not edited_due_date:
-                            print("Please enter a valid due date!")
+                            print("Please enter a valid due date! 👈")
 
                         else:
                             old_due_date = current_task["task_due_date"]
@@ -242,7 +258,8 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                             print()
 
                             print(f'"{old_due_date}" updated to "{edited_due_date}"')
-                            print("Task due date updated")
+                            print("Task due date updated✅")
+                            utils.separator()
                             data.save_data(existing_users)
                             break
 
@@ -251,7 +268,7 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                         edited_completion_date = input("Enter the new completion date: ").strip()
 
                         if not edited_completion_date:
-                            print("Please enter a valid completion date!")
+                            print("Please enter a valid completion date! 👈")
 
                         else:
                             old_completion_date = current_task["task_completion_date"]
@@ -260,7 +277,8 @@ def edit_task(current_user, existing_users, data): #Editing tasks
                             print()
 
                             print(f'"{old_completion_date}" updated to "{edited_completion_date}"')
-                            print("Task completion date updated")
+                            print("Task completion date updated✅")
+                            utils.separator()
                             data.save_data(existing_users)
                             break
 
@@ -269,15 +287,43 @@ def edit_task(current_user, existing_users, data): #Editing tasks
 
             break
 
+def update_password(current_user, existing_users, data):
+    while True:
+        old_password = input("Enter your old password to proceed: ")
+
+        if not old_password:
+            print("Please enter a valid password 👈")
+        elif old_password != current_user["password"]:
+            print("Password didn't match! ❌ Please try again 👈")
+            
+        else:
+            while True:
+                new_password = input("Enter your new password: ")
+
+                if not new_password:
+                    print("Please enter a valid password 👈")
+                elif new_password == current_user["password"]:
+                    print("New password can't be the same as the old one! ❌")
+                
+                else:
+                    current_user["password"] = new_password
+                    print("Password updated successfully✅")
+                    utils.separator()
+                    data.save_data(existing_users)
+                    break
+            break            
+
 
 while True:
     print()
+    print("===== MAIN MENU =====")
     print("1: View tasks")
     print("2: Add task")
     print("3: Delete task")
     print("4: Update task (edit, add dates, change status, etc...)")
     print("5: Update password")
     print("6: Exit")
+    print("====================")
     print()
 
     user_input = utils.valid_input_check("Choose an action: ", 1, 6)
@@ -292,8 +338,11 @@ while True:
     elif user_input == 3: #Delete task
         delete_task(current_user, existing_users, data)
 
-    elif user_input == 4: #Edit tasks
+    elif user_input == 4: #Update tasks
         edit_task(current_user, existing_users, data)
+    
+    elif user_input == 5: #Update password
+        update_password(current_user, existing_users, data)
 
     elif user_input == 6: #Exit
         break

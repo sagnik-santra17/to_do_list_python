@@ -5,9 +5,18 @@
             "password": "1234",
             "tasks": [
                 {
-                    "task_name": "Coding",
-                    "task_category": "Python",
-                    "task_description": "Code for 2 hours",
+                    "task_name": "Python coding",
+                    "task_category": "career",
+                    "task_description": "code for 2 hours",
+                    "task_status": "Completed",
+                    "task_due_date": null,
+                    "task_creation_date": null,
+                    "task_completion_date": null
+                },
+                {
+                    "task_name": "guitar",
+                    "task_category": "hobby",
+                    "task_description": "play for 1 hour",
                     "task_status": "Completed",
                     "task_due_date": null,
                     "task_creation_date": null,
@@ -16,26 +25,8 @@
                 {
                     "task_name": "running",
                     "task_category": "health",
-                    "task_description": "run for 30 minutes",
-                    "task_status": "Pending",
-                    "task_due_date": null,
-                    "task_creation_date": null,
-                    "task_completion_date": null
-                },
-                {
-                    "task_name": "gym",
-                    "task_category": "health",
-                    "task_description": "for 2 hours",
-                    "task_status": "Pending",
-                    "task_due_date": null,
-                    "task_creation_date": null,
-                    "task_completion_date": null
-                },
-                {
-                    "task_name": "singing ",
-                    "task_category": "hobby",
-                    "task_description": "30 mins",
-                    "task_status": "Pending",
+                    "task_description": "run for 1 hour",
+                    "task_status": "completed",
                     "task_due_date": null,
                     "task_creation_date": null,
                     "task_completion_date": null
@@ -43,18 +34,8 @@
             ]
         },
         {
-            "username": "gopal",
-            "password": "1234",
-            "tasks": []
-        },
-        {
-            "username": "gita",
-            "password": "1234",
-            "tasks": []
-        },
-        {
-            "username": "tubu",
-            "password": "1234",
+            "username": "sagnil",
+            "password": "12345",
             "tasks": []
         }
     ]
