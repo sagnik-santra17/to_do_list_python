@@ -25,7 +25,7 @@
                 {
                     "task_name": "running",
                     "task_category": "health",
-                    "task_description": "run for 1 hour",
+                    "task_description": "Run for 2 hours",
                     "task_status": "completed",
                     "task_due_date": null,
                     "task_creation_date": null,

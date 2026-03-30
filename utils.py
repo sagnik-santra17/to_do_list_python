@@ -24,9 +24,9 @@ def display_tasks(task_list): #Display task list inside the main script
         due_date = task_obj.task_due_date
         completion_date = task_obj.task_completion_date
 
-        creation_date = creation_date if creation_date else "-"
-        due_date = due_date if due_date else "-"
-        completion_date = completion_date if completion_date else "-"
+        creation_date = creation_date if creation_date else "DD/MM/YY"
+        due_date = due_date if due_date else "DD/MM/YY"
+        completion_date = completion_date if completion_date else "DD/MM/YY"
 
 
         if status == "completed":
