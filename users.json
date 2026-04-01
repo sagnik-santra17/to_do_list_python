@@ -3,40 +3,21 @@
         {
             "username": "sagnik",
             "password": "1234",
+            "email": "santra.sagnik17@gmail.com",
             "tasks": [
                 {
                     "task_name": "Python coding",
-                    "task_category": "career",
-                    "task_description": "code for 2 hours",
+                    "task_category": "Coding",
+                    "task_description": "Code for 2 hours",
                     "task_status": "Completed",
                     "task_due_date": null,
                     "task_creation_date": null,
-                    "task_completion_date": null
-                },
-                {
-                    "task_name": "guitar",
-                    "task_category": "hobby",
-                    "task_description": "play for 1 hour",
-                    "task_status": "Completed",
-                    "task_due_date": null,
-                    "task_creation_date": null,
-                    "task_completion_date": null
-                },
-                {
-                    "task_name": "running",
-                    "task_category": "health",
-                    "task_description": "Run for 2 hours",
-                    "task_status": "completed",
-                    "task_due_date": null,
-                    "task_creation_date": null,
-                    "task_completion_date": null
+                    "task_completion_date": null,
+                    "reminder_enabled": false,
+                    "reminder_24_sent": false,
+                    "reminder_1_sent": false
                 }
             ]
-        },
-        {
-            "username": "sagnil",
-            "password": "12345",
-            "tasks": []
         }
     ]
 }

@@ -1,6 +1,9 @@
 from data_manager import DataManager
 from task import Task
 import utils
+from datetime import datetime, timedelta
+import time
+import threading
 
 #Main menu
 print()
@@ -30,9 +33,11 @@ def login_or_signup():
         
     if not user_found:
         enter_password = input("Generate your password: ")
+        enter_email = input("Enter email address: ")
         existing_users["users"].append({
         "username": enter_username,
         "password": enter_password,
+        "email": enter_email,
         "tasks": []
         })
 
@@ -65,10 +70,31 @@ def add_task(current_user, existing_users, data): #Adding task function
 
     task = Task(new_task_name, new_task_category, new_task_description)
 
-    current_user["tasks"].append(task.to_dict())
-    print("Task added successfully ✅")
     utils.separator()
+    print()
+
+    print("Do you want to get reminded on the task? ")
+
+    while True:
+
+        reminder_option = input("Choose Yes/No: ").strip().lower()
+
+        if not reminder_option:
+            print("Please choose a valid input: Yes/No")
+        
+        else:
+            if reminder_option == "yes":
+                task.reminder_enabled = True
+                break
+            elif reminder_option == "no":
+                task.reminder_enabled = False
+                break
+            else:
+                print("Wrong input! Please choose between yes/no.")
+
+    current_user["tasks"].append(task.to_dict())
     data.save_data(existing_users)
+    print("Task added successfully ✅")
 
 
 def view_tasks(task_list, existing_users, data): #Viewing tasks function
@@ -246,23 +272,31 @@ def edit_task(task_list, existing_users, data): #Updating tasks
                             break
 
                 elif edit_choice == 6: #Editing due date
+
                     while True:
-                        edited_due_date = input("Enter the new due date: ").strip()
+                        edited_due_date = input("Enter the new due date (DD/MM/YYY, e.g., 12/10/2026): ").strip()
+                        date_format = "%d/%m/%Y"
 
                         if not edited_due_date:
-                            print("Please enter a valid due date! 👈")
+                            print("Invalid input! Please try again. 👈")
+                            continue
+                        
+                        try:
+                            old_task_due_date = current_task["task_due_date"]
+                            valid_date = datetime.strptime(edited_due_date, date_format)
+                            str_valid_date = datetime.strftime(valid_date, date_format)
 
-                        else:
-                            old_due_date = current_task["task_due_date"]
-                            current_task["task_due_date"] = edited_due_date
-
+                            current_task["task_due_date"] = str_valid_date
                             print()
 
-                            print(f'"{old_due_date}" updated to "{edited_due_date}"')
+                            print(f'"{old_task_due_date}" updated to "{str_valid_date}"')
                             print("Task due date updated ✅")
                             utils.separator()
                             data.save_data(existing_users)
                             break
+
+                        except:
+                            print("Wrong input! Please follow this format: DD/MM/YYY, e.g., 12/10/2026")
 
                 elif edit_choice == 7: #Editing task completion date
                     while True:
@@ -388,7 +422,35 @@ def search_task(current_user):
     edit_found_tasks(list_of_found_tasks)   
 
 
+def run_reminder_checker():
 
+    while True:
+
+        for task in current_user["tasks"]:
+            if task.get("reminder_enabled", False):
+                if task.get("task_due_date"):
+                    due_time = utils.time_remaining(task.get("task_due_date"))
+
+                    if due_time <= timedelta(hours=1):
+                        if not task.get("reminder_1_sent"):
+                            
+                            utils.send_email(task["task_name"], task["task_due_date"], "1_hour", current_user["email"])
+
+                            task["reminder_1_sent"] = True
+                            data.save_data(existing_users)
+
+                    elif due_time <= timedelta(hours=24):
+                        if not task.get("reminder_24_sent"):
+
+                            utils.send_email(task["task_name"], task["task_due_date"], "24_hour", current_user["email"])
+
+                            task["reminder_24_sent"] = True
+                            data.save_data(existing_users)
+                    
+        time.sleep(3)
+
+remdinder_thread = threading.Thread(target=run_reminder_checker, daemon=True)
+remdinder_thread.start()
 
 
 
@@ -431,6 +493,4 @@ while True:
 
     elif user_input == 7: #Exit
         break
-
-
 

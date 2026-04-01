@@ -1,4 +1,7 @@
 from task import Task
+from datetime import datetime
+import smtplib
+import os
 
 def main_task_func(task_item): #Prints the task details
 
@@ -32,7 +35,7 @@ def display_tasks(task_list): #Display task list inside the main script
         if status == "completed":
              status_symbol = "✅"
         else:
-            status_symbol = "[  ]"
+            status_symbol = "[ ]"
 
         print(f"[{task_number}] {task_obj.task_name}")
         print()
@@ -66,10 +69,51 @@ def separator():
     print()
 
 
+def time_remaining(due_date): #Time difference
+
+    current_time = datetime.now()
+    date_format = "%d/%m/%Y"
+
+    date_input = datetime.strptime(due_date, date_format).date()
+    due_date_with_curr_time = datetime.combine(date_input, current_time.time())
+    
+    final_due_time = due_date_with_curr_time - current_time
+    return final_due_time
 
 
+def send_email(task_name, due_date, reminder_type, email):
 
+    if reminder_type == "24_hour":
+        subject = f"Reminder: Task '{task_name}' due tomorrow"
+        body = f"Your task '{task_name}' is due tomorrow '{due_date}'. Please make sure to complete it on time."
+    
+    elif reminder_type == "1_hour":
+        subject = f"Urgent: Task '{task_name}' due in 1 hour"
+        body = f"Your task '{task_name}' is due in 1 hour. Please complete it as soon as possible."
 
+    else:
+        return
 
+    try:
+        smtp_object = smtplib.SMTP("smtp.gmail.com", 587)
+        smtp_object.ehlo()
+        smtp_object.starttls()
 
+        password = os.getenv("EMAIL_PASS")
+        
+        if password is None:
+            print("Email password not set")
+            return
 
+        from_address = "sagnik.satnra17@gmail.com"
+        smtp_object.login(from_address, password)
+
+        to_address = email
+        msg = "Subject: " + subject + "\n\n" + body
+
+        smtp_object.sendmail(from_address, to_address, msg)
+
+        smtp_object.quit()
+
+    except Exception as e:
+        print("Failed to send email:", e)
